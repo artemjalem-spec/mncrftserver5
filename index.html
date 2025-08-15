@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Список команд</title>
+  <style>
+    :root {
+      --bg: #0f172a;          /* slate-900 */
+      --bg-2: #111827;        /* gray-900 */
+      --card: #111827;
+      --text: #e5e7eb;        /* gray-200 */
+      --muted: #9ca3af;       /* gray-400 */
+      --accent: #60a5fa;      /* blue-400 */
+      --ring: rgba(96,165,250,.45);
+      --shadow: 0 10px 25px rgba(0,0,0,.35), 0 4px 8px rgba(0,0,0,.25);
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;          /* slate-50 */
+      --bg-2: #eef2ff;        /* indigo-50 */
+      --card: #ffffff;
+      --text: #0f172a;        /* slate-900 */
+      --muted: #475569;       /* slate-600 */
+      --accent: #2563eb;      /* blue-600 */
+      --ring: rgba(37,99,235,.25);
+      --shadow: 0 12px 28px rgba(2,6,23,.08), 0 8px 12px rgba(2,6,23,.06);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 400px at 10% -20%, rgba(59,130,246,.18), transparent),
+        radial-gradient(900px 420px at 110% 120%, rgba(236,72,153,.14), transparent),
+        linear-gradient(180deg, var(--bg-2), var(--bg));
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      display: grid;
+      place-items: center;
+      padding: 40px 16px;
+    }
+
+    .wrap {
+      width: min(960px, 100%);
+      display: grid;
+      gap: 18px;
+    }
+
+    header {
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .title {
+      display:flex;align-items:center;gap:12px
+    }
+
+    .title .logo {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg,#60a5fa,#a78bfa,#f472b6);
+      filter: saturate(1.2);
+      box-shadow: 0 8px 22px rgba(99,102,241,.35);
+    }
+
+    h1 { margin:0; font-size: clamp(22px, 3vw, 32px); letter-spacing:.3px }
+    p.sub { margin:0; color: var(--muted); font-size: 14px }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.06);
+      overflow: hidden;
+    }
+
+    .table-wrap { padding: 10px; }
+    table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+
+    thead th {
+      text-align: left; font-weight: 600; padding: 14px 16px; font-size: 14px; color: var(--muted);
+    }
+
+    tbody tr { transition: transform .2s ease, box-shadow .2s ease; }
+
+    tbody td {
+      padding: 16px;
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(6px);
+    }
+
+    tbody td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; width: 120px; font-weight: 700; }
+    tbody td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+
+    /* Индивидуальные цветовые акценты для строк */
+    tr.team-1 td { background: linear-gradient(135deg, rgba(59,130,246,.18), rgba(59,130,246,.06)); }
+    tr.team-2 td { background: linear-gradient(135deg, rgba(16,185,129,.18), rgba(16,185,129,.06)); }
+    tr.team-3 td { background: linear-gradient(135deg, rgba(234,179,8,.22), rgba(234,179,8,.06)); }
+    tr.team-4 td { background: linear-gradient(135deg, rgba(147,51,234,.22), rgba(147,51,234,.06)); }
+    tr.team-5 td { background: linear-gradient(135deg, rgba(244,63,94,.22), rgba(244,63,94,.06)); }
+
+    tbody tr:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.18); }
+
+    .badge { 
+      display:inline-flex; align-items:center; gap:6px; 
+      padding: 6px 10px; font-size: 12px; border-radius: 999px; 
+      background: rgba(244,63,94,.15); color: #fecdd3; border: 1px solid rgba(244,63,94,.35);
+      font-weight: 600; text-transform: uppercase; letter-spacing: .3px;
+    }
+
+    .controls { display:flex; gap:10px; align-items:center }
+    .btn {
+      border: 1px solid rgba(255,255,255,.15);
+      background: transparent;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,.15);
+    }
+    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.06); box-shadow: 0 8px 18px rgba(0,0,0,.18); }
+
+    footer { color: var(--muted); font-size: 12px; text-align: center }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="app">
+    <header>
+      <div class="title">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Список команд</h1>
+          <p class="sub">Обновлённый перечень участников. Красиво и просто ✨</p>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="toggleTheme" type="button" aria-label="Переключить тему">Тема: тёмная/светлая</button>
+      </div>
+    </header>
+
+    <section class="card table-wrap" aria-label="Таблица команд">
+      <table role="grid">
+        <thead>
+          <tr><th>№ Команды</th><th>Состав</th></tr>
+        </thead>
+        <tbody>
+          <tr class="team-1">
+            <td>1</td>
+            <td>Zeepin, Qsty</td>
+          </tr>
+          <tr class="team-2">
+            <td>2</td>
+            <td>Kanno, Mask</td>
+          </tr>
+          <tr class="team-3">
+            <td>3</td>
+            <td>Futoria, Rickow</td>
+          </tr>
+          <tr class="team-4">
+            <td>4</td>
+            <td>Dembel1n, Quazar</td>
+          </tr>
+          <tr class="team-5">
+            <td>5</td>
+            <td>
+              Игорь, Дино
+              <span class="badge" title="Информация требует подтверждения">! информация не точная</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById('toggleTheme');
+    const key = 'teams-theme';
+    const saved = localStorage.getItem(key);
+    if (saved === 'light') {
+      root.setAttribute('data-theme', 'light');
+    }
+    btn.addEventListener('click', () => {
+      const isLight = root.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        root.removeAttribute('data-theme');
+        localStorage.setItem(key, 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+        localStorage.setItem(key, 'light');
+      }
+    });
+  </script>
+</body>
+</html>
